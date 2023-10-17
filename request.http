@@ -1,0 +1,3 @@
+### Endpoint controller
+GET {{url}}/endpoint
+Accept: application/json

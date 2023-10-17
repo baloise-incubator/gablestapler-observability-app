@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: ${APP_NAME:gabelstrapler-observability-app}
+
+use-cases:
+  endpoint-one: ${USE_CASES_ENDPOINT_1:}
+  endpoint-two: ${USE_CASES_ENDPOINT_2:}
+  scheduler-endpoint: ${USE_CASES_SCHEDULER_ENDPOINT:}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [ "prometheus" ]
+  tracing:
+    sampling:
+      probability: 1.0
+  otlp:
+    tracing:
+      endpoint: ${TRACING_URL:http://localhost:4317}
+    metrics:
+      export:
+        enabled: false
+
+logging:
+  pattern:
+    level: '%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]'
