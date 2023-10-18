@@ -1,3 +1,7 @@
 ### Endpoint controller
 GET {{url}}/endpoint
 Accept: application/json
+
+### Open metrics
+GET {{url}}/actuator/prometheus
+Accept: application/openmetrics-text; version=1.0.0

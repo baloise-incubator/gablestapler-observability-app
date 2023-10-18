@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+
     <springProperty name="name" source="spring.application.name" />
     <springProperty name="lokiurl" source="loki.url" />
-
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>
-                %d{HH:mm:ss.SSS} %5p [${name:-},%X{traceId:-},%X{spanId:-}] - %msg%n
-            </pattern>
-        </encoder>
-    </appender>
 
     <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
         <http>
@@ -18,7 +12,7 @@
         </http>
         <format>
             <label>
-                <pattern>app=${name},host=${HOSTNAME},level=%level</pattern>
+                <pattern>app=${name},host=${HOSTNAME},traceID=%X{traceId:-NONE},level=%level</pattern>
                 <readMarkers>true</readMarkers>
             </label>
             <message>
@@ -39,7 +33,6 @@
     </appender>
 
     <root level="INFO">
-        <appender-ref ref="CONSOLE" />
         <appender-ref ref="LOKI" />
     </root>
 
